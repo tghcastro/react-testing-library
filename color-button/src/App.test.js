@@ -25,3 +25,18 @@ test('When Color Button is clicked, button state is', () => {
   expect(colorButton).toHaveAccessibleName('Change to red')
   expect(colorButton).toHaveStyle({backgroundColor: 'blue'})
 });
+
+test('When checkbox is checked then it disables the Color Button', () => {
+  render(<App />)
+  
+  const colorButton = screen.getByRole('button',{name: 'Change to blue'})
+  const checkbox = screen.getByRole('checkbox')
+
+  expect(colorButton).toBeEnabled()
+  expect(checkbox).not.toBeChecked()
+
+  fireEvent.click(checkbox)
+
+  expect(colorButton).toBeDisabled()
+
+});
