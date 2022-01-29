@@ -1,35 +1,27 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
 
-test('button has correct initial color', () => {
+test('Initial application Color Button state', () => {
   render(<App />)
   
   const colorButton = screen.getByRole('button',{name: 'Change to blue'})
+  expect(colorButton).toBeEnabled()
   expect(colorButton).toHaveStyle({backgroundColor: 'red'})
-});
-
-test('button has correct initial text', () => {
-  render(<App />)
-  
-  const colorButton = screen.getByRole('button')
   expect(colorButton).toHaveAccessibleName('Change to blue')
 });
 
-test('button turns blue when clicked', () => {
+test('Initial application checkbox state', () => {
+  render(<App />)
+  
+  const checkbox = screen.getByRole('checkbox')
+  expect(checkbox).not.toBeChecked()
+});
+
+test('When Color Button is clicked, button state is', () => {
   render(<App />)
   
   const colorButton = screen.getByRole('button')
   fireEvent.click(colorButton)
   expect(colorButton).toHaveAccessibleName('Change to red')
   expect(colorButton).toHaveStyle({backgroundColor: 'blue'})
-});
-
-test('initial component state', () => {
-  render(<App />)
-  
-  const colorButton = screen.getByRole('button',{name: 'Change to blue'})
-  expect(colorButton).toBeEnabled()
-
-  const checkbox = screen.getByRole('checkbox')
-  expect(checkbox).not.toBeChecked()
 });
