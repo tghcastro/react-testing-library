@@ -1,5 +1,6 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, waitForElementToBeRemoved } from '@testing-library/react';
 import SummaryForm from '../SummaryForm'
+import userEvent from '@testing-library/user-event'
 
 test('Initial state', ()=> {
     render(<SummaryForm />)
@@ -23,9 +24,28 @@ test('Checkbox disables button on first click and enables on second click', () =
         name: /confirm/i
     })
     
-    fireEvent.click(checkbox)
+    userEvent.click(checkbox)
     expect(confirmButton).toBeEnabled()
 
-    fireEvent.click(checkbox)
+    userEvent.click(checkbox)
     expect(confirmButton).toBeDisabled()
+})
+
+test('Popover responds to hover', async () => {
+    render(<SummaryForm />)
+
+    const popOverMessage = /no ice cream will actually be delivered/i
+    let popOverMessageElement = screen.queryByText(/no ice cream will actually be delivered/i)
+
+    expect(popOverMessageElement).not.toBeInTheDocument()
+
+    const termsAndConditions = screen.getByText(/terms and conditions/i)
+    userEvent.hover(termsAndConditions)
+
+    popOverMessageElement = screen.getByText(popOverMessage)
+    expect(popOverMessageElement).toBeInTheDocument()
+    
+    userEvent.unhover(termsAndConditions)
+
+    await waitForElementToBeRemoved(() => screen.queryByText(popOverMessage))
 })
