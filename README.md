@@ -1,5 +1,15 @@
 # Udemy - Testing React with Jest and Testing Library
 
+## Packages installations
+
+```shell
+npm install @testing-library/jest-dom
+npm install eslint-plugin-jest-dom
+npm install eslint-plugin-testing-library
+npm install @testing-library/user-event @testing-library/dom
+npm install axios
+```
+
 ## How to run
 
 ```shell
